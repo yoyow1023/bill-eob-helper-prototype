@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="A prototype that explains a sample medical bill and a sample insurance Explanation of Benefits in plain language. Not medical, legal, or insurance advice.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Bill &amp; EOB Helper (prototype)</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+  <div class="top">
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="#/home">
+          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="7" fill="currentColor"/>
+            <rect x="8" y="7" width="13" height="16" rx="1.5" fill="#f3efe6"/>
+            <rect x="11" y="10" width="12" height="16" rx="1.5" fill="#fffdf8"/>
+            <path d="M14 15h6M14 18h6M14 21h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+          </svg>
+          <span class="brand-text">
+            <span class="brand-name" data-i18n="brand">Bill &amp; EOB Helper</span>
+            <span class="brand-tag" data-i18n="brandTag">prototype</span>
+          </span>
+        </a>
+        <div class="lang-switch" id="lang-switch" role="group" data-i18n-aria-label="langGroup" aria-label="Language">
+          <button type="button" id="lang-en" aria-pressed="true">English</button>
+          <button type="button" id="lang-es" aria-pressed="false">Español</button>
+        </div>
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav" data-i18n-aria-label="nav.menu" aria-label="Menu">
+          <span data-i18n="nav.menu">Menu</span>
+        </button>
+        <nav class="site-nav" id="site-nav" data-i18n-aria-label="nav.menu" aria-label="Menu">
+          <a href="#/home" data-nav="home" data-i18n="nav.home">Home</a>
+          <a href="#/documents" data-nav="documents" data-i18n="nav.papers">Papers</a>
+          <a href="#/history" data-nav="history" data-i18n="nav.history">History</a>
+          <a href="#/about" data-nav="about" data-i18n="nav.about">About</a>
+        </nav>
+      </div>
+    </header>
+    <p class="sample-banner" role="note">Sample data / Datos de ejemplo — not a real bill</p>
+  </div>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <noscript>
+      <div class="card">
+        <p lang="en">This prototype needs JavaScript to move between screens. It still does not send any document anywhere. It is not medical, legal, or insurance advice, and it does not decide what anyone owes.</p>
+        <p lang="es">Este prototipo necesita JavaScript para cambiar de pantalla. Aun así, no envía ningún documento a ninguna parte. No es consejo médico, legal ni de seguro, y no decide lo que alguien debe pagar.</p>
+      </div>
+    </noscript>
+
+    <nav id="review-nav" class="review-nav" data-i18n-aria-label="nav.review" aria-label="Review steps" hidden>
+      <a href="#/summary" data-step="summary" data-i18n="steps.summary">Summary</a>
+      <a href="#/bill" data-step="bill" data-i18n="steps.bill">Bill</a>
+      <a href="#/eob" data-step="eob" data-i18n="steps.eob">EOB</a>
+      <a href="#/compare" data-step="compare" data-i18n="steps.compare">Compare</a>
+      <a href="#/questions" data-step="questions" data-i18n="steps.questions">Questions</a>
+      <button type="button" id="save-open" class="button button-secondary no-print" data-i18n="save.button">Save this review</button>
+    </nav>
+
+    <section id="view-home" class="view" hidden>
+      <h1 tabindex="-1" data-i18n="home.h1">Read a hospital bill next to the insurance EOB</h1>
+      <p class="lede" data-i18n="home.lede"></p>
+      <p class="note" data-i18n="home.privacy"></p>
+      <ol class="steps-intro">
+        <li>
+          <h2 data-i18n="home.step1t"></h2>
+          <p data-i18n="home.step1"></p>
+        </li>
+        <li>
+          <h2 data-i18n="home.step2t"></h2>
+          <p data-i18n="home.step2"></p>
+        </li>
+        <li>
+          <h2 data-i18n="home.step3t"></h2>
+          <p data-i18n="home.step3"></p>
+        </li>
+      </ol>
+      <div class="actions">
+        <a class="button button-primary" href="#/documents" data-i18n="home.start"></a>
+        <a class="button button-secondary" href="#/about" data-i18n="home.about"></a>
+      </div>
+      <p class="boundary" data-i18n="home.boundary"></p>
+    </section>
+
+    <section id="view-documents" class="view" hidden>
+      <h1 tabindex="-1" data-i18n="documents.h1"></h1>
+      <p class="lede" data-i18n="documents.intro"></p>
+      <div class="slot-grid">
+        <section class="slot" aria-labelledby="bill-slot-title">
+          <h2 id="bill-slot-title" data-i18n="documents.billTitle"></h2>
+          <p data-i18n="documents.billHelp"></p>
+          <div class="slot-actions">
+            <label class="file-button">
+              <span data-i18n="documents.choose"></span>
+              <input id="bill-file" type="file" accept="image/*,.pdf,application/pdf" data-i18n-aria-label="documents.chooseBill">
+            </label>
+            <label class="file-button">
+              <span data-i18n="documents.photo"></span>
+              <input id="bill-camera" type="file" accept="image/*" capture="environment" data-i18n-aria-label="documents.photoBill">
+            </label>
+          </div>
+          <p id="bill-slot-status" role="status"></p>
+        </section>
+        <section class="slot" aria-labelledby="eob-slot-title">
+          <h2 id="eob-slot-title" data-i18n="documents.eobTitle"></h2>
+          <p data-i18n="documents.eobHelp"></p>
+          <div class="slot-actions">
+            <label class="file-button">
+              <span data-i18n="documents.choose"></span>
+              <input id="eob-file" type="file" accept="image/*,.pdf,application/pdf" data-i18n-aria-label="documents.chooseEob">
+            </label>
+            <label class="file-button">
+              <span data-i18n="documents.photo"></span>
+              <input id="eob-camera" type="file" accept="image/*" capture="environment" data-i18n-aria-label="documents.photoEob">
+            </label>
+          </div>
+          <p id="eob-slot-status" role="status"></p>
+        </section>
+      </div>
+      <p class="note" data-i18n="documents.note"></p>
+      <p class="actions">
+        <button type="button" id="use-sample" class="button button-primary" data-i18n="documents.useSample"></button>
+      </p>
+      <div id="documents-result"></div>
+    </section>
+
+    <section id="view-summary" class="view" hidden>
+      <div id="summary-root"></div>
+    </section>
+    <section id="view-bill" class="view" hidden>
+      <div id="bill-root"></div>
+    </section>
+    <section id="view-eob" class="view" hidden>
+      <div id="eob-root"></div>
+    </section>
+    <section id="view-compare" class="view" hidden>
+      <div id="compare-root"></div>
+    </section>
+    <section id="view-questions" class="view" hidden>
+      <div id="questions-root"></div>
+    </section>
+
+    <section id="view-history" class="view" hidden>
+      <h1 tabindex="-1" data-i18n="history.h1"></h1>
+      <p class="lede" data-i18n="history.lede"></p>
+      <div id="history-root"></div>
+    </section>
+
+    <section id="view-about" class="view" hidden>
+      <h1 tabindex="-1" data-i18n="about.h1"></h1>
+      <h2 data-i18n="about.whatH"></h2>
+      <p data-i18n="about.whatP"></p>
+      <h2 data-i18n="about.notH"></h2>
+      <p data-i18n="about.notLead"></p>
+      <ul>
+        <li data-i18n="about.not1"></li>
+        <li data-i18n="about.not2"></li>
+        <li data-i18n="about.not3"></li>
+        <li data-i18n="about.not4"></li>
+        <li data-i18n="about.not5"></li>
+        <li data-i18n="about.not6"></li>
+      </ul>
+      <h2 data-i18n="about.sampleH"></h2>
+      <p data-i18n="about.sampleP"></p>
+      <h2 data-i18n="about.deviceH"></h2>
+      <p data-i18n="about.deviceP"></p>
+      <h2 data-i18n="about.helpH"></h2>
+      <p data-i18n="about.helpP"></p>
+      <ul>
+        <li data-i18n="about.help1"></li>
+        <li data-i18n="about.help2"></li>
+        <li data-i18n="about.help3"></li>
+        <li data-i18n="about.help4"></li>
+      </ul>
+      <h2 data-i18n="about.emergencyH"></h2>
+      <p data-i18n="about.emergencyP"></p>
+      <h2 data-i18n="about.howH"></h2>
+      <p data-i18n="about.howP"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p data-i18n="footer.disclaimer"></p>
+      <p><a href="#/about" data-i18n="footer.more"></a></p>
+    </div>
+  </footer>
+
+  <p id="status-live" class="visually-hidden" aria-live="polite"></p>
+
+  <dialog id="save-dialog" aria-labelledby="save-dialog-title" aria-describedby="save-dialog-body">
+    <h2 id="save-dialog-title" data-i18n="save.title"></h2>
+    <p id="save-dialog-body" data-i18n="save.body"></p>
+    <label for="save-label" data-i18n="save.label"></label>
+    <input id="save-label" type="text" maxlength="80" autocomplete="off" data-i18n-placeholder="save.placeholder">
+    <div class="dialog-actions">
+      <button type="button" id="save-cancel" class="button button-secondary" data-i18n="save.cancel"></button>
+      <button type="button" id="save-confirm" class="button button-primary" data-i18n="save.confirm"></button>
+    </div>
+  </dialog>
+
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+    <h2 id="confirm-title"></h2>
+    <p id="confirm-body"></p>
+    <div class="dialog-actions">
+      <button type="button" id="confirm-cancel" class="button button-secondary"></button>
+      <button type="button" id="confirm-ok" class="button button-danger"></button>
+    </div>
+  </dialog>
+
+  <script src="js/sample-data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/explain.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
